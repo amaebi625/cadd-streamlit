@@ -102,7 +102,7 @@ if df is not None:
         st.success(f"✅ 已保存 {len(filtered_df)} 个分子用于性质预测，可前往下一页查看")
 
     # ========== 3. 可视化雷达图 ========== #
-    st.subheader("📊 雷达图展示（最多5个分子）")
+    st.subheader("📊 Radar Chart Display (Up to 5 Molecules)")
     selected = filtered_df.dropna().head(5)
 
     def normalize_properties(row):
