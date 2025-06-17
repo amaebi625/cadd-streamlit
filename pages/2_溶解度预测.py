@@ -53,9 +53,9 @@ import seaborn as sns
 
 fig, ax = plt.subplots(figsize=(6, 4))
 sns.scatterplot(x="MW", y="ESOL_predicted", data=df, hue="QED", palette="viridis", ax=ax)
-ax.set_title("分子量与预测溶解度关系图")
-ax.set_xlabel("分子量 (MW)")
-ax.set_ylabel("预测 Log(溶解度)")
+ax.set_title("Relationship Between Molecular Weight and Predicted Solubility")
+ax.set_xlabel("Molecular Weight (MW)")
+ax.set_ylabel("Predicted Log(Solubility)")
 st.pyplot(fig)
 
 # ===== 下载结果 =====
