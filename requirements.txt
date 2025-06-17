@@ -9,3 +9,4 @@ shap
 biopython
 openai
 streamlit-ketcher
+xgboost
