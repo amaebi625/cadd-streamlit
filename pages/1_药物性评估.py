@@ -102,7 +102,7 @@ if df is not None:
         st.success(f"✅ 已保存 {len(filtered_df)} 个分子用于性质预测，可前往下一页查看")
 
     # ========== 3. 可视化雷达图 ========== #
-    st.subheader("📊 Radar Chart Display (Up to 5 Molecules)")
+    st.subheader("📊 雷达图展示(最多5个分子)")
     selected = filtered_df.dropna().head(5)
 
     def normalize_properties(row):
@@ -115,7 +115,7 @@ if df is not None:
             'QED': row['QED']
         }
 
-    def plot_multi_radar(df, title="多样本雷达图"):
+    def plot_multi_radar(df, title="Multi-Sample Radar Chart"):
         normed_rows = [normalize_properties(row) for _, row in df.iterrows()]
         radar_df = pd.DataFrame(normed_rows)
         labels = radar_df.columns.tolist()
@@ -127,7 +127,7 @@ if df is not None:
         for i, row in radar_df.iterrows():
             values = row.tolist()
             values += values[:1]
-            ax.plot(angles, values, label=f"样本 {i+1}")
+            ax.plot(angles, values, label=f"Sample {i+1}")
             ax.fill(angles, values, alpha=0.1)
 
         ax.set_theta_offset(np.pi / 2)
