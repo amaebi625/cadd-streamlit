@@ -85,17 +85,31 @@ if df is not None:
 
     # ========== 2.5 QED筛选功能 ========== #
     st.subheader("🔍 QED筛选")
+  
+    if len(result_df) == 0:
+        st.warning("⚠️ 当前没有可用于筛选的分子，请先完成药物性评价步骤。")
+        st.stop()
+    
     filter_mode = st.radio("选择筛选方式", ["按QED阈值", "保留Top-N高分子"])
+    
     if filter_mode == "按QED阈值":
         qed_threshold = st.slider("QED分数阈值", 0.0, 1.0, 0.6)
         filtered_df = result_df[result_df["QED"] >= qed_threshold]
     else:
-        top_n = st.number_input("保留前 N 个QED最高分子", min_value=1, max_value=len(result_df), value=10)
+        max_n = len(result_df)
+        default_n = min(10, max_n)
+        top_n = st.number_input(
+            "保留前 N 个QED最高分子",
+            min_value=1,
+            max_value=max_n,
+            value=default_n,
+            step=1
+        )
         filtered_df = result_df.sort_values("QED", ascending=False).head(top_n)
-
-    st.success(f"筛选后剩余 {len(filtered_df)} 个分子")
+    
+    st.success(f"✅ 筛选后剩余 {len(filtered_df)} 个分子")
     st.dataframe(filtered_df)
-
+    
     # ✅ 保存筛选结果到 session_state，用于后续活性预测
     if st.button("✔️ 使用当前筛选结果进行性质预测"):
         st.session_state["selected_for_activity"] = filtered_df.copy()
