@@ -18,9 +18,10 @@ st.success(f"✅ 已载入 {len(df)} 个分子用于 LogP 预测")
 
 # ===== 加载 XGBoost 模型 =====
 try:
-    model = joblib.load("config/logp_xgb_model.pkl")
-except FileNotFoundError:
-    st.error("❌ 未找到训练好的 XGBoost 模型文件，请先运行 train_logp_model.py 脚本生成 config/logp_xgb_model.pkl。")
+    model = xgb.Booster()
+    model.load_model("config/logp_xgb_model.json")
+except Exception as e:
+    st.error(f"❌ 无法加载模型：{e}")
     st.stop()
 
 # ===== 分子转指纹函数 =====
@@ -46,7 +47,8 @@ if not fps:
     st.stop()
 
 X = np.array(fps)
-logp_preds = model.predict(X)
+dtest = xgb.DMatrix(X)
+logp_preds = model.predict(dtest)
 
 # ===== 展示预测结果 =====
 df_valid = df.iloc[valid_indices].copy()
