@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 from rdkit import Chem
 from rdkit.Chem import AllChem, DataStructs
+import xgboost as xgb
 
 st.set_page_config(page_title="💧 亲脂性预测 (XGBoost)", page_icon="💧", layout="wide")
 st.title("💧 药物分子的亲脂性预测（LogP，XGBoost 模型）")
